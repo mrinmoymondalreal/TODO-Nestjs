@@ -1,0 +1,27 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "Mrinmoy Mondal",
+  "email": "mrinmoymondalreal@gmail.com",
+  "password": "mrinmoymondal"
+}
+
+###
+
+// Sign In
+GET http://localhost:3000/auth
+Content-Type: application/json
+# @name auth
+
+{
+  "email": "mrinmoymondalreal@gmail.com",
+  "password": "mrinmoymondal"
+}
+
+###
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFhNTEwODE5LWQzMjAtNDk4Zi04YTJjLWFjYzRmY2I4MmQ3OCIsImlhdCI6MTc0NDAyMjY4MCwiZXhwIjoxNzQ0MDI2MjgwfQ.MjmaS3cT1131ks2vkVfgYGcDdyHU3f1aCXPDF2MBGBY
+
+// Get user details
+GET http://localhost:3000/auth/me
+Authorization: Bearer {{token}}
