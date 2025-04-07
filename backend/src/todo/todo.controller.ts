@@ -7,11 +7,14 @@ import {
   Param,
   Body,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { Todo } from './todo.entity';
+import { AuthGaurd } from 'src/auth/guards/auth.gaurd';
 
 @Controller('todo')
+@UseGuards(AuthGaurd)
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 

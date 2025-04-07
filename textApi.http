@@ -25,3 +25,8 @@ Content-Type: application/json
 // Get user details
 GET http://localhost:3000/auth/me
 Authorization: Bearer {{token}}
+
+###
+
+GET http://localhost:3000/todo
+Authorization: Bearer {{token}}
