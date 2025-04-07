@@ -1,7 +1,16 @@
-import { Body, Controller, Get, Headers, Logger } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Headers,
+  Logger,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { SignInDto } from './dto/sign-in.dto';
 import { AuthService } from './auth.service';
 import { User } from 'src/users/entities/user.entity';
+import { AuthGaurd } from './guards/auth.gaurd';
 
 @Controller('auth')
 export class AuthController {
@@ -12,11 +21,9 @@ export class AuthController {
     return this.authService.signIn(user);
   }
 
+  @UseGuards(AuthGaurd)
   @Get('me')
-  async getUserDetails(
-    @Headers('Authorization') token: string,
-  ): Promise<Partial<User>> {
-    Logger.log(token);
-    return this.authService.getUserDetails(token.split(' ')[1]);
+  async getUserDetails(@Request() req): Promise<Partial<User>> {
+    return req.user;
   }
 }
