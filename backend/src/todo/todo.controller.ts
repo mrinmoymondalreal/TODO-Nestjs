@@ -8,6 +8,7 @@ import {
   Body,
   Query,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { Todo } from './todo.entity';
@@ -19,38 +20,40 @@ export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
   @Get()
-  getAllTodos(): Promise<Todo[]> {
-    return this.todoService.getAll();
+  async getAllTodos(@Request() req): Promise<Todo[]> {
+    return this.todoService.getAll(req.user.id);
   }
 
   @Get(':id')
-  getTodoById(@Param('id') id: string): Promise<Todo> {
-    return this.todoService.getById(id);
+  async getTodoById(@Request() req, @Param('id') id: string): Promise<Todo> {
+    return this.todoService.getById(req.user.id, id);
   }
 
   @Post()
-  createTodo(@Body() data: Partial<Todo>): Promise<Todo> {
-    return this.todoService.create(data);
+  async createTodo(@Request() req, @Body() data: Partial<Todo>): Promise<Todo> {
+    return await this.todoService.create(req.user, data);
   }
 
   @Patch(':id')
-  updateTodo(
+  async updateTodo(
     @Param('id') id: string,
     @Body() data: Partial<Todo>,
+    @Request() req,
   ): Promise<Todo> {
-    return this.todoService.update(id, data);
+    return this.todoService.update(req.user.id, id, data);
   }
 
   @Patch(':id')
-  completeTodo(
+  async completeTodo(
     @Param('id') id: string,
     @Query('done') completed: string,
+    @Request() req,
   ): Promise<Todo> {
-    return this.todoService.complete(id, completed === 'true');
+    return this.todoService.complete(req.user.id, id, completed === 'true');
   }
 
   @Delete(':id')
-  deleteTodo(@Param('id') id: string): Promise<void> {
-    return this.todoService.delete(id);
+  async deleteTodo(@Param('id') id: string, @Request() req): Promise<void> {
+    return this.todoService.delete(req.user.id, id);
   }
 }

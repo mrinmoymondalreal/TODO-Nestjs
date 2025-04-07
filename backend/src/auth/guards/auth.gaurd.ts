@@ -15,7 +15,7 @@ export class AuthGaurd implements CanActivate {
     const token = request.headers['authorization']?.split(' ')[1];
     if (!token) throw new UnauthorizedException('Token not found');
     try {
-      const decoded = this.authService.getUserDetails(token);
+      const decoded = await this.authService.getUserDetails(token);
       request.user = decoded;
       return true;
     } catch (error) {

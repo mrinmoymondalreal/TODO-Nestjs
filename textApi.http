@@ -20,13 +20,26 @@ Content-Type: application/json
 }
 
 ###
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFhNTEwODE5LWQzMjAtNDk4Zi04YTJjLWFjYzRmY2I4MmQ3OCIsImlhdCI6MTc0NDAyMjY4MCwiZXhwIjoxNzQ0MDI2MjgwfQ.MjmaS3cT1131ks2vkVfgYGcDdyHU3f1aCXPDF2MBGBY
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFhNTEwODE5LWQzMjAtNDk4Zi04YTJjLWFjYzRmY2I4MmQ3OCIsImlhdCI6MTc0NDAyNjMwNSwiZXhwIjoxNzQ0MDI5OTA1fQ.qKiOi7seiP2c2Y6F_d7nberTCl9WO_RID9UJRxTsZbc
 
 // Get user details
 GET http://localhost:3000/auth/me
 Authorization: Bearer {{token}}
 
 ###
+//Create Todo
+POST http://localhost:3000/todo
+Authorization: Bearer {{token}}
+Content-Type: application/json
 
+{
+  "title": "Todo 1",
+  "description": "Todo 1 description",
+  "completed": false
+}
+
+###
+
+// Get all Todos
 GET http://localhost:3000/todo
 Authorization: Bearer {{token}}
