@@ -3,7 +3,7 @@ import Centered from "../components/Centered";
 import { getBasicInstance } from "../service/api";
 import { saveAuth } from "../service/auth";
 import { useAuth } from "../components/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
   const { refreshUser } = useAuth();
@@ -96,6 +96,9 @@ function SignUp() {
               Sign In
             </button>
           </form>
+          <div className="mt-2">
+            New Here? <Link to="/sign-up">Sign Up</Link>
+          </div>
         </div>
       </div>
     </Centered>

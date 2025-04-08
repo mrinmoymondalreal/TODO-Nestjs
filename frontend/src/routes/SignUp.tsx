@@ -1,5 +1,7 @@
 import React from "react";
 import Centered from "../components/Centered";
+import { getBasicInstance } from "../service/api";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
   const [error, setError] = React.useState<string | null>(null);
@@ -7,12 +9,33 @@ function SignUp() {
   const formRef = React.useRef<HTMLFormElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const navigate = useNavigate();
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setLoading(true);
     // Handle form submission logic here
     const formData = new FormData(formRef.current!, buttonRef.current!);
-    console.log("Form Data:", Object.fromEntries(formData.entries()));
     console.log("Form submitted!");
+
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const name = formData.get("name") as string;
+
+    try {
+      await getBasicInstance().post("/users", {
+        email,
+        password,
+        name,
+      });
+
+      navigate("/sign-in");
+    } catch (error) {
+      console.error("Error during form submission:", error);
+      setError("An error occurred during sign in. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -80,6 +103,9 @@ function SignUp() {
               Sign Up
             </button>
           </form>
+          <div className="mt-2">
+            Already a User? <Link to="/sign-in">Sign In</Link>
+          </div>
         </div>
       </div>
     </Centered>
