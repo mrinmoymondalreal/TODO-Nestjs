@@ -3,6 +3,7 @@ import Centered from "../components/Centered";
 
 function SignUp() {
   const [error, setError] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState(false);
   const formRef = React.useRef<HTMLFormElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
 
@@ -71,7 +72,11 @@ function SignUp() {
                 required
               />
             </fieldset>
-            <button className="btn btn-primary" ref={buttonRef}>
+            <button
+              disabled={loading}
+              className="btn btn-primary"
+              ref={buttonRef}
+            >
               Sign Up
             </button>
           </form>

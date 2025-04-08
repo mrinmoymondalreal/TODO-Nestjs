@@ -1,17 +1,44 @@
 import React from "react";
 import Centered from "../components/Centered";
+import { getBasicInstance } from "../service/api";
+import { saveAuth } from "../service/auth";
+import { useAuth } from "../components/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const { refreshUser } = useAuth();
   const [error, setError] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState(false);
   const formRef = React.useRef<HTMLFormElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const navigate = useNavigate();
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setLoading(true);
     // Handle form submission logic here
     const formData = new FormData(formRef.current!, buttonRef.current!);
-    console.log("Form Data:", Object.fromEntries(formData.entries()));
     console.log("Form submitted!");
+
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    try {
+      const resp = await getBasicInstance().post("/auth", {
+        email,
+        password,
+      });
+
+      saveAuth(resp.data.accessToken);
+      refreshUser();
+
+      navigate("/");
+    } catch (error) {
+      console.error("Error during form submission:", error);
+      setError("An error occurred during sign in. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -61,7 +88,11 @@ function SignUp() {
                 required
               />
             </fieldset>
-            <button className="btn btn-primary" ref={buttonRef}>
+            <button
+              disabled={loading}
+              className="btn btn-primary"
+              ref={buttonRef}
+            >
               Sign In
             </button>
           </form>
