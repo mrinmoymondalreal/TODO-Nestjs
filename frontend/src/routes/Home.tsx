@@ -33,11 +33,23 @@ function Todo({ todo }: { todo: any }) {
     });
   }
 
+  function handleDelete(e: React.MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation(); // Prevent the click event from bubbling up to the parent div
+    console.log("Deleting todo:", todo.id);
+    getAuthInstance()
+      .delete(`/todo/${todo.id}`)
+      .then(() => {
+        console.log("Todo deleted successfully");
+      })
+      .catch((err) => {
+        console.error("Error deleting todo:", err);
+      });
+  }
+
   return (
     <div
       onClick={handleClick}
-      data-completed={checked}
-      className="data-[completed=true]:line-through cursor-pointer border flex gap-2 items-center p-2 m-2 rounded-md"
+      className="cursor-pointer border flex gap-2 items-center justify-between p-2 m-2 rounded-md"
     >
       <input
         type="checkbox"
@@ -45,10 +57,16 @@ function Todo({ todo }: { todo: any }) {
         onChange={handleChange}
         className="checkbox checkbox-primary"
       />
-      <div>
+      <div
+        data-completed={checked}
+        className="data-[completed=true]:line-through w-full px-3"
+      >
         <h3 className="text-lg font-semibold">{todo.title}</h3>
         <p>{todo.description}</p>
       </div>
+      <button onClick={handleDelete} type="button" className="btn btn-error ">
+        Del
+      </button>
     </div>
   );
 }
