@@ -26,4 +26,7 @@ export class Todo {
 
   @ManyToOne(() => User, (user) => user.todos)
   user: User;
+
+  @Column({ nullable: true })
+  userId: string;
 }

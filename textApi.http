@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ###
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFhNTEwODE5LWQzMjAtNDk4Zi04YTJjLWFjYzRmY2I4MmQ3OCIsImlhdCI6MTc0NDAyNjMwNSwiZXhwIjoxNzQ0MDI5OTA1fQ.qKiOi7seiP2c2Y6F_d7nberTCl9WO_RID9UJRxTsZbc
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5ODNmZjMzLTM3M2ItNDc1MS1iN2ZjLTIwMTk3OWE0YTA5YSIsImlhdCI6MTc0NDA5Nzg2MiwiZXhwIjoxNzQ0MTAxNDYyfQ.Rm2vkPW8LbMWWDZDTIa710sYOXjSMDZJsc5PTWcLodc
 
 // Get user details
 GET http://localhost:3000/auth/me
@@ -42,4 +42,10 @@ Content-Type: application/json
 
 // Get all Todos
 GET http://localhost:3000/todo
+Authorization: Bearer {{token}}
+
+###
+
+// Get specific Todos with id
+GET http://localhost:3000/todo/5aa7daf2-4513-4e6e-9942-0273e75c7a12
 Authorization: Bearer {{token}}
