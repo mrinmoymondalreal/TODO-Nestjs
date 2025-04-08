@@ -10,7 +10,7 @@ Content-Type: application/json
 ###
 
 // Sign In
-GET http://localhost:3000/auth
+POST http://localhost:3000/auth
 Content-Type: application/json
 # @name auth
 
@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ###
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5ODNmZjMzLTM3M2ItNDc1MS1iN2ZjLTIwMTk3OWE0YTA5YSIsImlhdCI6MTc0NDA5Nzg2MiwiZXhwIjoxNzQ0MTAxNDYyfQ.Rm2vkPW8LbMWWDZDTIa710sYOXjSMDZJsc5PTWcLodc
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5ODNmZjMzLTM3M2ItNDc1MS1iN2ZjLTIwMTk3OWE0YTA5YSIsImlhdCI6MTc0NDEwMTUxNCwiZXhwIjoxNzQ0MTA1MTE0fQ.EHZvHjE1DH-pcoie_Iwn_nTTNI9Sb-6LPBD0JnCYEt8
 
 // Get user details
 GET http://localhost:3000/auth/me
